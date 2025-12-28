@@ -1,0 +1,49 @@
+services:
+
+  api-gateway:
+    build:
+      context: ..
+      dockerfile: docker/api-gateway/Dockerfile
+    image: sunaodisha/api-gateway:latest
+
+  config-server:
+    build:
+      context: ..
+      dockerfile: docker/config-server/Dockerfile
+    image: sunaodisha/config-server:latest
+
+  eureka:
+    build:
+      context: ..
+      dockerfile: docker/eureka/Dockerfile
+    image: sunaodisha/eureka:latest
+
+  customers:
+    build:
+      context: ..
+      dockerfile: docker/customers/Dockerfile
+    image: sunaodisha/customers:latest
+
+  vets:
+    build:
+      context: ..
+      dockerfile: docker/vets/Dockerfile
+    image: sunaodisha/vets:latest
+
+  visitors:
+    build:
+      context: ..
+      dockerfile: docker/visitors/Dockerfile
+    image: sunaodisha/visitors:latest
+
+  genai:
+    build:
+      context: ..
+      dockerfile: docker/genai/Dockerfile
+    image: sunaodisha/genai:latest
+
+  admin:
+    build:
+      context: ..
+      dockerfile: docker/admin/Dockerfile
+    image: sunaodisha/admin:latest
