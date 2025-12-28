@@ -1,0 +1,101 @@
+version: "3.8"
+
+services:
+
+  config-server:
+    build:
+      context: .
+      dockerfile: docker/config-server/Dockerfile
+    image: sunaodisha/config-server:latest
+    container_name: config-server
+    ports:
+      - "8888:8888"
+    networks:
+      - petclinic-net
+
+  eureka:
+    build:
+      context: .
+      dockerfile: docker/eureka/Dockerfile
+    image: sunaodisha/eureka:latest
+    container_name: eureka
+    ports:
+      - "8761:8761"
+    depends_on:
+      - config-server
+    networks:
+      - petclinic-net
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: docker/api-gateway/Dockerfile
+    image: sunaodisha/api-gateway:latest
+    container_name: api-gateway
+    ports:
+      - "5555:5555"
+    depends_on:
+      - eureka
+      - config-server
+    networks:
+      - petclinic-net
+
+  customers:
+    build:
+      context: .
+      dockerfile: docker/customers/Dockerfile
+    image: sunaodisha/customers:latest
+    container_name: customers
+    ports:
+      - "6666:6666"
+    depends_on:
+      - eureka
+      - config-server
+    networks:
+      - petclinic-net
+
+  visitors:
+    build:
+      context: .
+      dockerfile: docker/visitors/Dockerfile
+    image: sunaodisha/visitors:latest
+    container_name: visitors
+    ports:
+      - "7777:7777"
+    depends_on:
+      - eureka
+      - config-server
+    networks:
+      - petclinic-net
+
+  vets:
+    build:
+      context: .
+      dockerfile: docker/vets/Dockerfile
+    image: sunaodisha/vets:latest
+    container_name: vets
+    ports:
+      - "9999:9999"
+    depends_on:
+      - eureka
+      - config-server
+    networks:
+      - petclinic-net
+
+  genai:
+    build:
+      context: .
+      dockerfile: docker/genai/Dockerfile
+    image: sunaodisha/genai:latest
+    container_name: genai
+    ports:
+      - "4444:4444"
+    depends_on:
+      - eureka
+      - config-server
+    networks:
+      - petclinic-net
+
+networks:
+  petclinic-net:
+    driver: bridge
