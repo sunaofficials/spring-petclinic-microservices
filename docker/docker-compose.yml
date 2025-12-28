@@ -1,100 +1,49 @@
-
 services:
 
-  config-server:
-    build:
-      context: .
-      dockerfile: docker/config-server/Dockerfile
-    image: sunaodisha/config-server:latest
-    container_name: config-server
+  api-gateway:
+    image: sunaodisha/api-gateway:latest
+    build: ./api-gateway
     ports:
-      - "8888:8888"
-    networks:
-      - petclinic-net
+      - "5555:8080"
+
+  admin:
+    image: sunaodisha/admin:latest
+    build: ./admin
+    ports:
+      - "4444:8080"
+
+  config-server:
+    image: sunaodisha/config-server:latest
+    build: ./config-server
+    ports:
+      - "6666:8888"
 
   eureka:
-    build:
-      context: .
-      dockerfile: docker/eureka/Dockerfile
     image: sunaodisha/eureka:latest
-    container_name: eureka
+    build: ./eureka
     ports:
-      - "8761:8761"
-    depends_on:
-      - config-server
-    networks:
-      - petclinic-net
-
-  api-gateway:
-    build:
-      context: .
-      dockerfile: docker/api-gateway/Dockerfile
-    image: sunaodisha/api-gateway:latest
-    container_name: api-gateway
-    ports:
-      - "5555:5555"
-    depends_on:
-      - eureka
-      - config-server
-    networks:
-      - petclinic-net
+      - "7777:8761"
 
   customers:
-    build:
-      context: .
-      dockerfile: docker/customers/Dockerfile
     image: sunaodisha/customers:latest
-    container_name: customers
+    build: ./customers
     ports:
-      - "6666:6666"
-    depends_on:
-      - eureka
-      - config-server
-    networks:
-      - petclinic-net
-
-  visitors:
-    build:
-      context: .
-      dockerfile: docker/visitors/Dockerfile
-    image: sunaodisha/visitors:latest
-    container_name: visitors
-    ports:
-      - "7777:7777"
-    depends_on:
-      - eureka
-      - config-server
-    networks:
-      - petclinic-net
+      - "8888:8080"
 
   vets:
-    build:
-      context: .
-      dockerfile: docker/vets/Dockerfile
     image: sunaodisha/vets:latest
-    container_name: vets
+    build: ./vets
     ports:
-      - "9999:9999"
-    depends_on:
-      - eureka
-      - config-server
-    networks:
-      - petclinic-net
+      - "9999:8080"
+
+  visitors:
+    image: sunaodisha/visitors:latest
+    build: ./visitors
+    ports:
+      - "3333:8080"
 
   genai:
-    build:
-      context: .
-      dockerfile: docker/genai/Dockerfile
     image: sunaodisha/genai:latest
-    container_name: genai
+    build: ./genai
     ports:
-      - "4444:4444"
-    depends_on:
-      - eureka
-      - config-server
-    networks:
-      - petclinic-net
-
-networks:
-  petclinic-net:
-    driver: bridge
+      - "2222:8080"
