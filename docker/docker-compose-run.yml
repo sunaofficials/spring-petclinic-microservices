@@ -3,55 +3,55 @@ services:
   eureka:
     image: sunaodisha/eureka:latest
     ports:
-      - "4444:4444"
+      - "4444:8080"
     networks: [petclinic]
 
   api-gateway:
     image: sunaodisha/api-gateway:latest
     ports:
-      - "5555:5555"
+      - "5555:8080"
     depends_on: [eureka]
     networks: [petclinic]
 
   config-server:
     image: sunaodisha/config-server:latest
     ports:
-      - "6666:6666"
+      - "6666:8080"
     depends_on: [eureka]
     networks: [petclinic]
 
   customers:
     image: sunaodisha/customers:latest
     ports:
-      - "7777:7777"
+      - "7777:8080"
     depends_on: [eureka]
     networks: [petclinic]
 
   vets:
     image: sunaodisha/vets:latest
     ports:
-      - "8888:8888"
+      - "8888:8080"
     depends_on: [eureka]
     networks: [petclinic]
 
   visitors:
     image: sunaodisha/visitors:latest
     ports:
-      - "9999:9999"
+      - "9999:8080"
     depends_on: [eureka]
     networks: [petclinic]
 
   genai:
     image: sunaodisha/genai:latest
     ports:
-      - "9091:9091"
+      - "9091:8080"
     depends_on: [eureka]
     networks: [petclinic]
 
   admin:
     image: sunaodisha/admin:latest
     ports:
-      - "9090:9090"
+      - "9090:8080"
     depends_on: [eureka]
     networks: [petclinic]
 
